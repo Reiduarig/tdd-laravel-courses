@@ -2,6 +2,7 @@
 
 use function Pest\Laravel\get;
 use App\Models\Course;
+use App\Models\Video;
 
 it('shows courses details', function () {
 
@@ -35,6 +36,15 @@ it('shows courses details', function () {
 it('shows course video count', function () {
 
     // Arrange: Create some course data in the database
+    // $this->withoutExceptionHandling(); // Para ver errores detallados durante la prueba
+    $course = Course::factory()->create();
+    Video::factory()->count(3)->create([
+        'course_id' => $course->id,
+    ]);
 
+    // Act & Assert: Make a GET request to the course details page and assert the video count
+    get(route('course-details', $course))
+        ->assertOk()
+        ->assertSeeText('3 Videos');
    
 });

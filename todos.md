@@ -1,14 +1,14 @@
 ## Invitado
 
-* Ver descripciones generales de los cursos
-* Consultar los detalles de los mismos
-* Comprar los cursos
+* Ver descripciones generales de los cursos (pagina) 👌
+* Ver los detalles del curso (pagina) 👌
+* Comprar un curso
 
 ## Miembros
 
-* Usuarios registrados que pueden iniciar sesión
-* Ver cursos comprados
-* Visualizar dichos cursos 
+* Usuarios registrados que pueden iniciar sesión (pagina)
+* Ver cursos comprados (pagina)
+* Visualizar dichos cursos (pagina)
 
 ## Administradores
 
