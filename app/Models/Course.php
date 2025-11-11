@@ -13,12 +13,17 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
+        'tagline',
+        'image',
+        'learnings',
         'release_at',
     ];
 
     protected $casts = [
         'release_at' => 'datetime',
+        'learnings' => 'array',
     ];
 
     public function scopeReleased(Builder $query): Builder
