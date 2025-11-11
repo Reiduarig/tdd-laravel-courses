@@ -13,6 +13,11 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
+        'release_at',
+    ];
+
+    protected $casts = [
+        'release_at' => 'datetime',
     ];
 }
     
