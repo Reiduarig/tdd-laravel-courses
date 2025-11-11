@@ -7,33 +7,21 @@ it('shows courses overview', function () {
 
     // Arrange: Create some course data in the database
 
-    Course::factory()->create([
-        'title' => 'Introduction to Testing',
-        'description' => 'Learn the basics of testing in Laravel.',
-        'release_at' => Carbon::yesterday(),
-    ]);
+    $firstCourse = Course::factory()->released()->create();
 
-    Course::factory()->create([
-        'title' => 'Advanced Laravel',
-        'description' => 'Deep dive into advanced Laravel features.',
-        'release_at' => Carbon::tomorrow(),
-    ]);
+    $secondCourse = Course::factory()->released()->create();
 
-    Course::factory()->create([
-        'title' => 'PHP for Beginners',
-        'description' => 'Start your journey with PHP programming.',
-        'release_at' => Carbon::today(),
-    ]);
+    $thirdCourse = Course::factory()->released()->create();
 
     // Act & Assert: Make a GET request to the home page
     get(route('home'))
         ->assertSeeText([
-            'Introduction to Testing',
-            'Learn the basics of testing in Laravel.',
-            'Advanced Laravel',
-            'Deep dive into advanced Laravel features.',
-            'PHP for Beginners',
-            'Start your journey with PHP programming.',
+            $firstCourse->title,
+            $firstCourse->description,
+            $secondCourse->title,
+            $secondCourse->description,
+            $thirdCourse->title,
+            $thirdCourse->description,
         ]);
 
 
@@ -44,41 +32,29 @@ it('shows only released courses', function () {
 
     // Arrange: Create both released and unreleased courses in the database
 
-    Course::factory()->create([
-        'title' => 'Introduction to Testing',
-        'release_at' => Carbon::yesterday(),
-    ]);
-
-    Course::factory()->create([
-        'title' => 'Advanced Laravel',
-        
-    ]);
+    $releasedCourse = Course::factory()->released()->create();
+    
+    $notReleasedCourse = Course::factory()->create();
 
     // Act & Assert: Make a GET request to the home page
     get(route('home'))
-        ->assertSeeText('Introduction to Testing')
-        ->assertDontSeeText('Advanced Laravel');
+        ->assertSeeText($releasedCourse->title)
+        ->assertDontSeeText($notReleasedCourse->title);
 });
 
 it('shows courses by release date', function () {
     
     // Arrange: Create courses with different release dates in the database
 
-    Course::factory()->create([
-        'title' => 'Introduction to Testing',
-        'release_at' => Carbon::yesterday(),
-    ]);
+    $releasedCourse = Course::factory()->released(Carbon::yesterday())->create();
 
-    Course::factory()->create([
-        'title' => 'Advanced Laravel',
-        'release_at' => Carbon::now(),     
-    ]);
+    $newestReleasedCourse = Course::factory()->released()->create();
 
     // Act & Assert: Make a GET request to the home page
 
     get(route('home'))
         ->assertSeeTextInOrder([
-            'Introduction to Testing',
-            'Advanced Laravel',
+            $newestReleasedCourse->title,
+            $releasedCourse->title,     
         ]);
 });

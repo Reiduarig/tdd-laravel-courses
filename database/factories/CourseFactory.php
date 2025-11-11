@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,5 +22,12 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph,
             
         ];
+    }
+
+    public function released(Carbon $date = null)
+    {
+        return $this->state(
+            fn(array $attributes) => ['release_at' => $date ?? Carbon::now()]
+        );
     }
 }
