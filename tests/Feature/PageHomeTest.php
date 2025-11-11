@@ -1,6 +1,8 @@
 <?php
-use Carbon\Carbon;
+
 use App\Models\Course;
+use Carbon\Carbon;
+
 use function Pest\Laravel\get;
 
 it('shows courses overview', function () {
@@ -24,16 +26,14 @@ it('shows courses overview', function () {
             $thirdCourse->description,
         ]);
 
-
 });
-
 
 it('shows only released courses', function () {
 
     // Arrange: Create both released and unreleased courses in the database
 
     $releasedCourse = Course::factory()->released()->create();
-    
+
     $notReleasedCourse = Course::factory()->create();
 
     // Act & Assert: Make a GET request to the home page
@@ -43,7 +43,7 @@ it('shows only released courses', function () {
 });
 
 it('shows courses by release date', function () {
-    
+
     // Arrange: Create courses with different release dates in the database
 
     $releasedCourse = Course::factory()->released(Carbon::yesterday())->create();
@@ -55,6 +55,6 @@ it('shows courses by release date', function () {
     get(route('home'))
         ->assertSeeTextInOrder([
             $newestReleasedCourse->title,
-            $releasedCourse->title,     
+            $releasedCourse->title,
         ]);
 });

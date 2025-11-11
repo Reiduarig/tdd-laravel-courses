@@ -20,14 +20,14 @@ class CourseFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            
+
         ];
     }
 
-    public function released(Carbon $date = null)
+    public function released(?Carbon $date = null)
     {
         return $this->state(
-            fn(array $attributes) => ['release_at' => $date ?? Carbon::now()]
+            fn (array $attributes) => ['release_at' => $date ?? Carbon::now()]
         );
     }
 }

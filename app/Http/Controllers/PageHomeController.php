@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
+use Illuminate\Http\Request;
 
 class PageHomeController extends Controller
 {
@@ -16,6 +16,7 @@ class PageHomeController extends Controller
             ->released()
             ->orderByDesc('release_at')
             ->get();
+
         return view('home', compact('courses'));
     }
 }
